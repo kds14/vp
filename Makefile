@@ -9,8 +9,9 @@ all: $(TARGET)
 $(TARGET): $(SRC)
 	mkdir -p $(DIR)
 	$(CC) $(CFLAGS) -o $@ $^ $(shell sdl2-config --cflags --libs) \
-	-L/opt/ffmpeg -I/opt/ffmpeg/include -lavcodec -lavformat \
-	#-lavfilter -lavdevice -lswresample -lswscale -lavutil
+	-lavformat -lavcodec -lavfilter -lavdevice -lavresample -lswscale -lavutil \
+	-lpthread -lm -lz\
+
 
 clean:
 	rm -r $(DIR)
