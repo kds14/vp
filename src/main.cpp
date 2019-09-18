@@ -93,16 +93,16 @@ int main(int argc, char **argv) {
 			//cout << "FRAME: " << cctx->frame_number << endl;
 			dur = (1 + frame->repeat_pict) * time_base;
 
-			AVPicture pic;
-			pic.data[0] = yuv_data.y_plane;
-			pic.data[1] = yuv_data.u_plane;
-			pic.data[2] = yuv_data.v_plane;
-			pic.linesize[0] = yuv_data.y_pitch;
-			pic.linesize[1] = yuv_data.uv_pitch;
-			pic.linesize[2] = yuv_data.uv_pitch;
-			sws_scale(swsctx, (uint8_t const * const *)frame->data,
+			AVFrame tmp_frame;
+			tmp_frame.data[0] = yuv_data.y_plane;
+			tmp_frame.data[1] = yuv_data.u_plane;
+			tmp_frame.data[2] = yuv_data.v_plane;
+			tmp_frame.linesize[0] = yuv_data.y_pitch;
+			tmp_frame.linesize[1] = yuv_data.uv_pitch;
+			tmp_frame.linesize[2] = yuv_data.uv_pitch;
+			sws_scale(swsctx, frame->data,
 					frame->linesize, 0, cctx->height,
-					pic.data, pic.linesize);
+					tmp_frame.data, tmp_frame.linesize);
 
 			disp->write(yuv_data);
 			disp->display();
